@@ -1,0 +1,6 @@
+body {
+  color: white;
+  background: rgb(200, 0, 0);
+  background: linear-gradient(0deg, #c03010, #ff3010);
+  font-family: Arial, Helvetica, sans-serif;
+}

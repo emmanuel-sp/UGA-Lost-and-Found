@@ -1,0 +1,61 @@
+.landing {
+    display: grid;
+    grid-template-rows: 5vh 30vh 10vh 15vh 5vh 15vh 1fr;
+    grid-template-columns: 1fr 6fr 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+.mainTitle {
+
+    font-family: "League Gothic", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings: "wdth" 80;
+    font-size: 6em;
+    background: black;
+
+    padding: 0px;
+    margin: 0px;
+    grid-row: 2;
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.startFindBtn {
+    font-size: 4em;
+    font-family: 'League Gothic';
+    border-radius: 10px;
+
+    grid-row: 4;
+    grid-column: 2;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBtn {
+    font-size: 4em;
+    font-family: 'League Gothic';
+
+    border-radius: 10px;
+    border-width: 1vh;
+    border-style: solid;
+    color: white;
+    background: rgba(0, 0, 0, 0);
+
+    grid-row: 6;
+    grid-column: 2;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
