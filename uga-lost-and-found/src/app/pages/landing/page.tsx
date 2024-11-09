@@ -11,7 +11,7 @@ export default function Landing() {
       <h1 className={style.mainTitle}>UGA Lost & Found</h1>
 
       <button className={style.startFindBtn} 
-              onClick={() => router.push('./contact')}>Start Finding</button>
+              onClick={() => router.push('./items')}>Start Finding</button>
               
       <button className={style.loginBtn} 
               onClick={() => router.push('./login')}>Login / Signup</button>

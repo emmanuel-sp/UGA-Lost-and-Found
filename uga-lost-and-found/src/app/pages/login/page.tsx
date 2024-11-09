@@ -11,7 +11,7 @@ export default function Login() {
     <div className={style.login}>
       <h2 className={style.loginPrompt}>Welcome to the Login Page!</h2>
       <button onClick={() => router.push('./landing')}>Login</button>
-      <button onClick={() => router.push('./contact')}>Continue without logging in</button>
+      <button onClick={() => router.push('./login')}>Continue without logging in</button>
     </div>
   );
 };
