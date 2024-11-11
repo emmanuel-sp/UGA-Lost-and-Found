@@ -15,12 +15,22 @@ const dummyItems = [
 export default function Items() {
   const router = useRouter();
 
+// I (Amir) added this code to test my code of adding a new item.
+
+
+
+
+
+
+
+
   return (
     <>
       <nav className={style.navbar}>
         <h2 className={style.name}>UGA Lost & Found</h2>
         <Search/>
         <button onClick={() => router.push('./login')} className={style.button2}>Login/Signup</button>
+        <button onClick={() => router.push('./form')} className={style.button2}>Add Item</button>
       </nav>
       <section className={style.itemList}>
         {dummyItems.map((item, index) => (

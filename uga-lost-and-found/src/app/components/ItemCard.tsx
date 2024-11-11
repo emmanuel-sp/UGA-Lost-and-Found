@@ -2,6 +2,7 @@ import Image from 'next/image';
 import styles from '../css/ItemCard.module.css';
 
 interface ItemCardProps {
+  //id:number;
   name: string;
   dateFound: string;
   locationFound: string;
