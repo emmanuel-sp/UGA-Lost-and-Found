@@ -25,4 +25,5 @@ export default function Login() {
       <button onClick={cancelLogin}>Continue without logging in</button>
     </div>
   );
+  
 };

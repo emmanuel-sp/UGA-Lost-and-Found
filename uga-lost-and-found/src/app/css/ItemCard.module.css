@@ -6,9 +6,9 @@
     color: black;
     border: 1px solid #ddd;
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 6px;
     width: 100%;
-    max-width: 600px;
+    margin: 1vw;
     box-sizing: border-box;
     margin-bottom: 24px;
 }
@@ -72,15 +72,18 @@
 
 .itemList {
     display: grid;
+    width: 100vw;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
+    
 }
 
 .itemCardContainer {
+    display: inline-flex;          /* Changed to inline-flex for centering text */
+    justify-content: center;       /* Centers horizontally */
+    align-items: center;  
     width: 100%;
-    max-width: 600px;
     box-sizing: border-box;
 }
 

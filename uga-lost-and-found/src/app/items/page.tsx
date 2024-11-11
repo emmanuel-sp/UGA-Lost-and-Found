@@ -2,6 +2,7 @@
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import style from '../css/Items.module.css';
+import itemstyle from '../css/ItemCard.module.css';
 import Search from '../components/Search';
 import ItemCard from '../components/ItemCard';
 
@@ -15,24 +16,32 @@ const dummyItems = [
 
 export default function Items() {
   const { loggedIn } = useAuth();
+  const { setLoggedIn } = useAuth();
   const router = useRouter();
 
 // I (Amir) added this code to test my code of adding a new item.
 
   return (
     <>
-      <nav className={style.navbar}>
-        <h2 className={style.name}>UGA Lost & Found</h2>
-        <Search/>
-        <button onClick={() => router.push('/login')} className={style.button2}>Login/Signup</button>
-        <button onClick={() => router.push('/form')} className={style.button2}>Add Item</button>
-        {loggedIn && (
-          <h1>YO YO YO</h1>
-        )}
-      </nav>
-      <section className={style.itemList}>
+      {loggedIn ? (
+        <nav className={style.AuthNavBar}>
+          <h2 className={style.name}>UGA Lost & Found</h2>
+          <Search/>
+          <button onClick={() => router.push('/form')} className={style.navButton}>Add Item</button>
+          <button onClick={() => setLoggedIn(false)} className={style.navButton}>Logout</button>
+        </nav>
+      ) : (
+        <nav className={style.UnauthNavBar}>
+          <h2 className={style.name}>UGA Lost & Found</h2>
+          <Search/>
+          <button onClick={() => router.push('/login')} className={style.navButton}>Login/Signup</button>
+        </nav>
+      )}
+      
+
+      <section className={itemstyle.itemList}>
         {dummyItems.map((item, index) => (
-          <div key={index} className={style.itemCardContainer}>
+          <div key={index} className={itemstyle.itemCardContainer}>
             <ItemCard
               name={item.name}
               dateFound={item.dateFound}
