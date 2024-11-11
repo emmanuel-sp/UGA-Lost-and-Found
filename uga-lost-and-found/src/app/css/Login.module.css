@@ -1,15 +1,28 @@
 .login {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    height: 100vh;
-    width: 100vw;
-
-    justify-content: center;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.loginPrompt {
+.title {
+    display: block;
+    margin-bottom: auto;
+    align-self: center;
+    font-size: 4em;
+}
+.input {
+    display: block;
+}
+.form {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.cancel {
+    display: block;
+}
+.signup {
+    display: block;
 }
