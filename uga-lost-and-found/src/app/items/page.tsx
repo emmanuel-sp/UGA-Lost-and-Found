@@ -29,7 +29,7 @@ export default function Items() {
           <h2 className={style.name}>UGA Lost & Found</h2>
           <Search/>
           <Link href="/form" className={style.linkButton}>
-            Login/Signup
+            Add Item
           </Link>
           <Link href="/" onClick={() => setLoggedIn(false)} className={style.linkButton}>
             Logout
