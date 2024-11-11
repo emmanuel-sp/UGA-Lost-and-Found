@@ -13,7 +13,6 @@
 }
 
 .name {
-
     display: inline-flex;          /* Changed to inline-flex for centering text */
     justify-content: center;       /* Centers horizontally */
     align-items: center;           /* Centers vertically */
@@ -28,9 +27,36 @@
     background-color: black;
 }
 
+.linkButton {
+    display: inline-flex;          /* Changed to inline-flex for centering text */
+    justify-content: center;       /* Centers horizontally */
+    align-items: center;           /* Centers vertically */
+    text-align: center;    
+    box-sizing: border-box;
+    margin: 1vw;
+    padding: 2px 6px;              /* Padding similar to buttons */
+
+    border: solid;
+    border-radius: 6px;
+
+    font-size: 4vh;
+    color: black;
+    background-color: white;
+    text-decoration: none;
+}
+
+.linkButton:hover {
+    background-color: lightgray;
+}
+
 .navButton{
     margin: 1vw 1vw 1vw 1vw;
     font-size: 4vh;
     border: solid;
     border-radius: 6px;
+    background-color: white;
+}
+
+.navButton:hover {
+    background-color: lightgray;
 }

@@ -1,10 +1,11 @@
 "use client"
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import style from '../css/Items.module.css';
-import itemstyle from '../css/ItemCard.module.css';
+import Link from 'next/link';
 import Search from '../components/Search';
 import ItemCard from '../components/ItemCard';
+import style from '../css/Items.module.css';
+import itemstyle from '../css/ItemCard.module.css';
 
 const dummyItems = [
   { name: 'Water Bottle', dateFound: '11-01-2024 14:30', locationFound: 'UGA Main Library', imageUrl: 'https://target.scene7.com/is/image/Target/GUEST_d1cc925e-7052-4ef5-baff-a590b9778bc5?wid=1200&hei=1200&qlt=80&fmt=webp', status: 'Unclaimed' },
@@ -27,8 +28,12 @@ export default function Items() {
         <nav className={style.AuthNavBar}>
           <h2 className={style.name}>UGA Lost & Found</h2>
           <Search/>
-          <button onClick={() => router.push('/form')} className={style.navButton}>Add Item</button>
-          <button onClick={() => setLoggedIn(false)} className={style.navButton}>Logout</button>
+          <Link href="/form" className={style.linkButton}>
+            Login/Signup
+          </Link>
+          <Link href="/" onClick={() => setLoggedIn(false)} className={style.linkButton}>
+            Logout
+          </Link>
         </nav>
       ) : (
         <nav className={style.UnauthNavBar}>
