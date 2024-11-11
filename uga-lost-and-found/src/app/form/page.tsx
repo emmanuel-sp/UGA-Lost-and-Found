@@ -1,7 +1,7 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import style from '../../css/Form.module.css'
+import style from '../css/Form.module.css'
 
 type FormData = {
   name: string;

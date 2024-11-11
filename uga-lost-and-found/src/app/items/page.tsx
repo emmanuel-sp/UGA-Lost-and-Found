@@ -1,8 +1,9 @@
 "use client"
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import style from '../../css/Items.module.css';
-import Search from '../../components/Search';
-import ItemCard from '../../components/ItemCard';
+import style from '../css/Items.module.css';
+import Search from '../components/Search';
+import ItemCard from '../components/ItemCard';
 
 const dummyItems = [
   { name: 'Water Bottle', dateFound: '11-01-2024 14:30', locationFound: 'UGA Main Library', imageUrl: 'https://target.scene7.com/is/image/Target/GUEST_d1cc925e-7052-4ef5-baff-a590b9778bc5?wid=1200&hei=1200&qlt=80&fmt=webp', status: 'Unclaimed' },
@@ -13,24 +14,21 @@ const dummyItems = [
 ];
 
 export default function Items() {
+  const { loggedIn } = useAuth();
   const router = useRouter();
 
 // I (Amir) added this code to test my code of adding a new item.
-
-
-
-
-
-
-
 
   return (
     <>
       <nav className={style.navbar}>
         <h2 className={style.name}>UGA Lost & Found</h2>
         <Search/>
-        <button onClick={() => router.push('./login')} className={style.button2}>Login/Signup</button>
-        <button onClick={() => router.push('./form')} className={style.button2}>Add Item</button>
+        <button onClick={() => router.push('/login')} className={style.button2}>Login/Signup</button>
+        <button onClick={() => router.push('/form')} className={style.button2}>Add Item</button>
+        {loggedIn && (
+          <h1>YO YO YO</h1>
+        )}
       </nav>
       <section className={style.itemList}>
         {dummyItems.map((item, index) => (
