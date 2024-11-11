@@ -98,8 +98,6 @@
   .editButton,
   .deleteButton {
     padding: 5px 10px;
-    border: none;
-    cursor: pointer;
     border-radius: 4px;
     margin-top: 15px;
     background-color: lightgray;
