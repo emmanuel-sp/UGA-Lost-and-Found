@@ -1,4 +1,5 @@
 import Image from 'next/image';
+//import { useAuth } from '../context/AuthContext';
 import styles from '../css/ItemCard.module.css';
 
 interface ItemCardProps {
@@ -15,6 +16,12 @@ const ItemCard: React.FC<ItemCardProps> = ({ name, dateFound, locationFound, ima
     <div className={`${styles.statusBox} ${status === "Claimed" ? styles.claimed : styles.unclaimed}`}>
         {status}
     </div>
+    
+    <div className={styles.buttonContainer}>
+      <button className={styles.editButton}>Edit</button>
+      <button className={styles.deleteButton}>Delete</button>
+    </div>
+
     <div className={styles.imageContainer}>
       {imageUrl ? (
         <Image
