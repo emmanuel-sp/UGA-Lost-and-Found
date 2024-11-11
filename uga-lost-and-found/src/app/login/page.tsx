@@ -11,7 +11,8 @@ export default function Login() {
   const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
     setLoggedIn(true);
     router.push('/items');
   };
