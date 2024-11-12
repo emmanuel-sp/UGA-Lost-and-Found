@@ -20,20 +20,14 @@ export default function Items() {
   const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-
-
   return (
     <>
       {loggedIn ? (
         <nav className={style.AuthNavBar}>
           <h2 className={style.name}>UGA Lost & Found</h2>
           <Search/>
-          <Link href="/form" className={style.linkButton}>
-            Add Item
-          </Link>
-          <Link href="/" onClick={() => setLoggedIn(false)} className={style.linkButton}>
-            Logout
-          </Link>
+          <button onClick={() => router.push('/form')} className={style.navButton}>Add Item</button>
+          <button onClick={() => setLoggedIn(false)} className={style.navButton}>Logout</button>
         </nav>
       ) : (
         <nav className={style.UnauthNavBar}>
@@ -43,7 +37,6 @@ export default function Items() {
         </nav>
       )}
       
-
       <section className={itemstyle.itemList}>
         {dummyItems.map((item, index) => (
           <div key={index} className={itemstyle.itemCardContainer}>
