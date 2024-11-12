@@ -20,7 +20,7 @@ export default function Items() {
   const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-// I (Amir) added this code to test my code of adding a new item.
+
 
   return (
     <>

@@ -35,7 +35,7 @@ export default function Form({ onAddItem }: FormProps) {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
    
-    onAddItem(formData);
+    //onAddItem(formData); Removed because we are going to use the server to access items.
 
     //Clear the input fields
     setFormData({
@@ -45,6 +45,10 @@ export default function Form({ onAddItem }: FormProps) {
       status: 'Unclaimed',
       imageUrl: '',
     });
+
+  router.push('./items');  // Returns to the items page
+
+
   }; // Handle Submit
   
   return (
