@@ -2,27 +2,96 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+    justify-content: space-between;
+}
+.name {
+    color:black
 }
 
-.title {
-    display: block;
-    margin-bottom: auto;
-    align-self: center;
-    font-size: 4em;
+.greet-log {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 450px;
+
+}
+
+.greeting {
+    font-size: 32pt;
+    width:fit-content;
 }
 .input {
     display: block;
+    border-color: transparent;
+    border-radius: 5px;
+    width: 320px;
+    height: 52px;
+    margin-bottom: .5em;
+    font-size: 15pt;
+    padding-left: 15px;
 }
+
+.login-button {
+    width: 320px;
+    height: 52px;
+    align-self: center;
+    font-size: 15pt;
+    color: white;
+    background-color: black;
+    border-color: transparent;
+    border-radius: 5px;
+}
+
+.login-button:hover {
+    background-color: rgba(0, 0, 0, 0.579);
+    cursor: pointer;
+}
+
+.login-button:disabled {
+    background-color: rgba(0, 0, 0, 0.579);
+    cursor: default;
+}
+
+.separator {
+    color: black;
+}
+
 .form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+    margin-bottom: 20px;
 }
 
-.cancel {
-    display: block;
+.alt-options {
+    margin-bottom: 20px;
 }
+
+
+.cancel {
+    display: inline;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 12pt;
+}
+.cancel:hover {
+    cursor: pointer;
+}
+
 .signup {
-    display: block;
+    display: inline;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 12pt;
+}
+
+.signup:hover {
+    cursor:pointer;
+}
+
+.error {
+    font-size: 12pt;
+    width: fit-content;
+    align-self:center;
 }
