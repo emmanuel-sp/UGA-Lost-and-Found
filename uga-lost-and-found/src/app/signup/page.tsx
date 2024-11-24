@@ -2,7 +2,7 @@
 
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import style from '../css/Login.module.css'
 
 export default function Signup() {
@@ -13,7 +13,7 @@ export default function Signup() {
   const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-  const handleLogin = (event) => {
+  const handleLogin = (event: FormEvent) => {
     event.preventDefault();
     setLoggedIn(true);
     router.push('/items');
@@ -23,17 +23,17 @@ export default function Signup() {
     router.push('/items');
   };
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setUsername(event.target.value);
   }
   
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setPassword(event.target.value);
     if (password != event.target.value) setErrorMessage(true);
     else setErrorMessage(false);
   }
 
-  const handleConfirmPasswordChange = (event) => {
+  const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setConfirmPassword(event.target.value);
     if (password != event.target.value) setErrorMessage(true);
     else setErrorMessage(false);

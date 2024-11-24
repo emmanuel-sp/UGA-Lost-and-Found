@@ -2,7 +2,7 @@
 
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import style from '../css/Login.module.css'
 
 export default function Login() {
@@ -11,7 +11,7 @@ export default function Login() {
   const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-  const handleLogin = (event) => {
+  const handleLogin = (event: FormEvent) => {
     event.preventDefault();
     setLoggedIn(true);
     router.push('/items');
@@ -25,11 +25,11 @@ export default function Login() {
     router.push('/signup');
   }
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setUsername(event.target.value);
   }
   
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setPassword(event.target.value);
   }
 
