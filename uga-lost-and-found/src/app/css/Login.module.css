@@ -6,30 +6,41 @@
     justify-content: space-between;
 }
 .name {
-    color:black
+    color: white;
+    background-color: black;
+    border-radius: 7px;
+    padding: 12px;
 }
 
 .greet-log {
     display:flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     width: 450px;
-
+    padding: 55px 25px;
+    background-color: whitesmoke;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.267) 5px 5px;
 }
 
 .greeting {
-    font-size: 32pt;
+    font-size: 29pt;
+    color: black;
     width:fit-content;
+    margin-bottom: 90px;
+
 }
+
 .input {
     display: block;
-    border-color: transparent;
+    border: #BA0C2F solid 2px;
     border-radius: 5px;
     width: 320px;
     height: 52px;
     margin-bottom: .5em;
     font-size: 15pt;
     padding-left: 15px;
+
 }
 
 .login-button {
@@ -38,13 +49,14 @@
     align-self: center;
     font-size: 15pt;
     color: white;
-    background-color: black;
+    background-color: #BA0C2F;
     border-color: transparent;
     border-radius: 5px;
+    margin-top: 15px;
 }
 
 .login-button:hover {
-    background-color: rgba(0, 0, 0, 0.579);
+    background-color: #ba0c2f7c;
     cursor: pointer;
 }
 
