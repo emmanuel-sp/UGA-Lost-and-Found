@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useAuth } from '../context/AuthContext';
 import styles from '../css/ItemCard.module.css';
+import { useRouter } from 'next/navigation';
 
 interface ItemCardProps {
   //id:number;
@@ -14,6 +15,8 @@ interface ItemCardProps {
 const ItemCard: React.FC<ItemCardProps> = ({ name, dateFound, locationFound, imageUrl, status }) => {
 
   const { loggedIn } = useAuth();
+  const router = useRouter();
+
 
   return (
     <div className={styles.card}>
@@ -22,7 +25,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ name, dateFound, locationFound, ima
       </div>
       {loggedIn && (
         <div className={styles.buttonContainer}>
-          <button className={styles.editButton}>Edit</button>
+          <button onClick={() => router.push('/edit-items/[id]')} className={styles.editButton}>Edit</button>
           <button className={styles.deleteButton}>Delete</button>
         </div>
       )}
