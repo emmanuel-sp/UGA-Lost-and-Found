@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "test": "echo \"No test specified\""
-}, 
+    "test": "echo \"No test specified\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -14,5 +14,8 @@
     "next": "^15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2"
   }
 }
