@@ -1,5 +1,5 @@
-import connectMongoDB from "@/app/libs/mongodb";
-import Item from "@/app/models/itemSchema";
+import connectMongoDB from "@/libs/mongodb";
+import Item from "@/models/itemSchema";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";

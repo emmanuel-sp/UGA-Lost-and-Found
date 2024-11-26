@@ -1,26 +1,35 @@
-import mongoose, {Schema, Document, Model} from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
+
+enum ItemStatus {
+    Claimed = "Claimed",
+    Unclaimed = "Unclaimed",
+}
 
 interface IItem extends Document {
-    title: string;
-    description?: string;
-    image?: string;
-    updated_date: Date;
+    name: string;
+    dateFound: string;
+    locationFound: string;
+    imageUrl?: string;
+    status: ItemStatus;
 }
 
 const itemSchema = new Schema<IItem>({
-    title: {
+    name: {
         type: String,
         required: true,
     },
-    description: {
+    dateFound: {
         type: String,
     },
-    image: {
+    locationFound: {
         type: String,
     },
-    updated_date: {
-        type: Date,
-        default: Date.now,
+    imageUrl: {
+        type: String,
+    },
+    status: {
+        type: String,
+        enum: Object.values(ItemStatus), // Ensures only "Claimed" or "Unclaimed" are stored
     },
 });
 

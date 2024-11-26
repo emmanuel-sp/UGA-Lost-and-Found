@@ -1,43 +1,60 @@
-import Image from 'next/image';
-import { useAuth } from '../context/AuthContext';
-import styles from '../css/ItemCard.module.css';
-import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import { useAuth } from "../context/AuthContext";
+import styles from "../css/ItemCard.module.css";
+import { useRouter } from "next/navigation";
 
 interface ItemCardProps {
-  //id:number;
   name: string;
   dateFound: string;
   locationFound: string;
   imageUrl?: string;
   status: "Claimed" | "Unclaimed";
+  onDelete: () => void; // Add the onDelete callback prop
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ name, dateFound, locationFound, imageUrl, status }) => {
-
+const ItemCard: React.FC<ItemCardProps> = ({
+  name,
+  dateFound,
+  locationFound,
+  imageUrl,
+  status,
+  onDelete,
+}) => {
   const { loggedIn } = useAuth();
   const router = useRouter();
 
-
   return (
     <div className={styles.card}>
-      <div className={`${styles.statusBox} ${status === "Claimed" ? styles.claimed : styles.unclaimed}`}>
-          {status}
+      <div
+        className={`${styles.statusBox} ${
+          status === "Claimed" ? styles.claimed : styles.unclaimed
+        }`}
+      >
+        {status}
       </div>
       {loggedIn && (
         <div className={styles.buttonContainer}>
-          <button onClick={() => router.push('/edit-items/[id]')} className={styles.editButton}>Edit</button>
-          <button className={styles.deleteButton}>Delete</button>
+          <button
+            onClick={() => router.push("/edit-items/[id]")}
+            className={styles.editButton}
+          >
+            Edit
+          </button>
+          <button onClick={onDelete} className={styles.deleteButton}>
+            Delete
+          </button>
         </div>
       )}
 
       <div className={styles.imageContainer}>
         {imageUrl ? (
           <Image
-          src={imageUrl} 
-          alt={name}
-          width={80}
-          height={80}
-          className={styles.image} />
+            src={imageUrl}
+            alt={name}
+            width={80}
+            height={80}
+            className={styles.image}
+          />
         ) : (
           <span className={styles.noImage}>No Picture</span>
         )}
@@ -52,5 +69,3 @@ const ItemCard: React.FC<ItemCardProps> = ({ name, dateFound, locationFound, ima
 };
 
 export default ItemCard;
-
-  
