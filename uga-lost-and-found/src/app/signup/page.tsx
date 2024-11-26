@@ -29,7 +29,7 @@ export default function Signup() {
   
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setPassword(event.target.value);
-    if (password != event.target.value) setErrorMessage(true);
+    if (event.target.value != confirmPassword) setErrorMessage(true);
     else setErrorMessage(false);
   }
 
