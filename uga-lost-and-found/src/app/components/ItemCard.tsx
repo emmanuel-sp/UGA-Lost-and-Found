@@ -10,6 +10,7 @@ interface ItemCardProps {
   imageUrl?: string;
   status: "Claimed" | "Unclaimed";
   onDelete: () => void; // Add the onDelete callback prop
+  onEdit: () => void; // Add the onEdit callback loop
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -19,6 +20,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
   imageUrl,
   status,
   onDelete,
+  onEdit,
 }) => {
   const { loggedIn } = useAuth();
   const router = useRouter();
@@ -35,7 +37,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
       {loggedIn && (
         <div className={styles.buttonContainer}>
           <button
-            onClick={() => router.push("/edit-items/[id]")}
+            onClick={onEdit}
             className={styles.editButton}
           >
             Edit

@@ -79,6 +79,7 @@ export default function Items() {
                 imageUrl={item.imageUrl}
                 status={item.status as "Claimed" | "Unclaimed"}
                 onDelete={() => onDeleteClick(item._id)} // Pass the delete handler
+                onEdit={() => router.push(`edit-items/${item._id}`)}
               />
             </div>
           ))
