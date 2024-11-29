@@ -17,7 +17,6 @@ export default function EditForm() {
   const params = useParams();
   const id  = params?.id;
 
- 
   
   const [newData, setUpdateData] = useState<FormData>({
     name: '',

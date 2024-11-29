@@ -20,15 +20,18 @@ const itemSchema = new Schema<IItem>({
     },
     dateFound: {
         type: String,
+        required: true,
     },
     locationFound: {
         type: String,
+        required: true,
     },
     imageUrl: {
         type: String,
     },
     status: {
         type: String,
+        required: true,
         enum: Object.values(ItemStatus), // Ensures only "Claimed" or "Unclaimed" are stored
     },
 });

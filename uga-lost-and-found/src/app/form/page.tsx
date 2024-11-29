@@ -5,17 +5,13 @@ import style from '../css/Form.module.css'
 
 type FormData = {
   name: string;
-  dateFound: string;
+  dateFound: Date | string;
   locationFound: string;
   status?: "Claimed" | "Unclaimed";
   imageUrl: string;
 };
 
-interface FormProps  {
-  onAddItem: (newItem: FormData) => void;
-};
-
-export default function Form({ onAddItem }: FormProps) {
+export default function Form() {
 
   const router = useRouter();
   
@@ -32,23 +28,24 @@ export default function Form({ onAddItem }: FormProps) {
     setFormData(prevData => ({...prevData, [id]: value, }));
   }; // Handler that updates the Form
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-   
-    //onAddItem(formData); Removed because we are going to use the server to access items.
-
-    //Clear the input fields
-    setFormData({
-      name: '',
-      dateFound: '',
-      locationFound: '',
-      status: 'Unclaimed',
-      imageUrl: '',
-    });
-
-  router.push('./items');  // Returns to the items page
-
-
+    try {
+      alert(JSON.stringify(formData));
+      const response = await fetch(`/api/items`, 
+        {
+          method: "POST",
+          body: JSON.stringify(formData),
+        }
+      )
+      if (!response.ok) {
+        const errorMessage = await response.json()
+        console.log(errorMessage);
+      }
+    } catch (err) {
+      console.log("Unknown trouble adding item!")
+    }
+    router.push('./items');  // Returns to the items page
   }; // Handle Submit
   
   return (
@@ -59,39 +56,35 @@ export default function Form({ onAddItem }: FormProps) {
         <input className={style.input}
           id="name"
           type="text"
-          placeholder="Enter your name"
-          // Added this:
+          placeholder="Describe this item"
           value={formData.name}
           onChange={handleChange}
-
+          required
         />
         <label htmlFor="dateFound" className={style.label}>Date Found</label>
         <input className={style.input}
           id="dateFound"
-          type="text"
-          placeholder="Enter the date found"
-          //Added this:
-          value={formData.dateFound}
+          type="date"
+          placeholder="When did you find this item?"
+          value={formData.dateFound as string}
           onChange={handleChange}
+          required
         />
         <label htmlFor="locationFound" className={style.label} >Location Found</label>
         <input className={style.input}
           id="locationFound"
           type="text"
-          placeholder="Enter the location it is found"
-          // Added this:
+          placeholder="Where did you find this item?"
           value={formData.locationFound}
           onChange={handleChange}
+          required
         />
         <label htmlFor="status" className={style.label}>Status</label>
         <select className={style.input}
           id="status"
-          //type="status"
-          //placeholder="Enter its status Unclaimed or Claimed"
-          // Added this:
           value={formData.status}
-          //onChange={handleChange}
-          onChange={(event) => handleChange(event as ChangeEvent<HTMLSelectElement>)}
+          onChange={handleChange}
+          required
         >
           <option value="Unclaimed">Unclaimed</option>
           <option value="Claimed">Claimed</option>
@@ -100,8 +93,7 @@ export default function Form({ onAddItem }: FormProps) {
         <input className={style.input}
           id="imageUrl"
           type="url"
-          placeholder="Enter image URL"
-          // Added this:
+          placeholder="Upload an image of this item (paste url)"
           value={formData.imageUrl}
           onChange={handleChange}
         />
