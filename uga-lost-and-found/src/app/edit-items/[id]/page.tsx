@@ -17,7 +17,6 @@ export default function EditForm() {
   const params = useParams();
   const id  = params?.id;
 
-  
   const [newData, setUpdateData] = useState<FormData>({
     name: '',
     dateFound: '',
@@ -35,14 +34,13 @@ export default function EditForm() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            //setUpdateData(data.newData);
-
+            
             setUpdateData({
-              name: data.name || "",
-              dateFound: data.dateFound || "",
-              locationFound: data.locationFound || "",
-              status: data.status || "Unclaimed",
-              imageUrl: data.imageUrl || "",
+              name: data.item.name || "",
+              dateFound: data.item.dateFound || "",
+              locationFound: data.item.locationFound || "",
+              status: data.item.status || "Unclaimed",
+              imageUrl: data.item.imageUrl || "",
             });
 
         } catch (error) {
@@ -66,25 +64,22 @@ export default function EditForm() {
 
      // This is the Put(update) Item to update data of this item
         try {   
-            const response = await fetch(`/api/items/${id}`);
+            const response = await fetch(`/api/items/${id}`, 
+              {
+                method: "PUT",
+                body: JSON.stringify(newData),
+              }
+            );
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            const data = await response.json();
-            const itemData = data.item;
-            setUpdateData( {
-                name: itemData.name || '',
-                dateFound: itemData.dateFound || '',
-                locationFound: itemData.locationfound || '',
-                status: itemData.status || 'Unclaimed',
-                imageUrl: itemData.imageUrl || ''
-        });
+            
         } catch (error) {
             console.log('Error from UpdateItemInfo');
         } // This is the PUT request to update a new item!
 
-    router.refresh();
-    router.push('./items');  // Returns to the items page
+    //router.refresh();
+    router.push('../items');  // Returns to the items page
 
   }; // Handle Submit to update Item
   
