@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
         const { email, password } = await request.json();
         await connectMongoDB();
 
-        /*
         if (!email || !password) {
             return NextResponse.json(
                 { message: "Email and password are required." },
@@ -24,7 +23,7 @@ export async function POST(request: NextRequest) {
                 { message: "User already exists." },
                 { status: 409 }
             );
-        }*/
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
