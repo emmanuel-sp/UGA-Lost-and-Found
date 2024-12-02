@@ -104,6 +104,7 @@
 
 .error {
     font-size: 12pt;
+    color: red;
     width: fit-content;
     align-self:center;
 }

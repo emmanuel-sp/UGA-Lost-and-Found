@@ -8,7 +8,7 @@ import style from '../css/Login.module.css'
 export default function Signup() {
   
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ export default function Signup() {
 
     // Validate inputs
     if (!formData.email || !formData.password) {
-      setErrorMessage(true);
+      setErrorMessage('Email and password are required');
       return;
     }
 
@@ -37,12 +37,12 @@ export default function Signup() {
 
       if (!response.ok) {
         const data = await response.json();
-        setErrorMessage(true);
+        setErrorMessage('User not found!');
         return;
       }
 
     } catch (error) {
-      setErrorMessage(true);
+      setErrorMessage('User not found!');
     }
 
     router.push('/items');
@@ -60,14 +60,14 @@ export default function Signup() {
       ...prev,
       password: event.target.value,
     }));
-    if (confirmPassword != event.target.value) setErrorMessage(true);
-    else setErrorMessage(false);
+    if (confirmPassword != event.target.value) setErrorMessage('Passwords must match!');
+    else setErrorMessage('');
   }
 
   const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setConfirmPassword(event.target.value);
-    if (formData.password != event.target.value) setErrorMessage(true);
-    else setErrorMessage(false);
+    if (formData.password != event.target.value) setErrorMessage('Passwords must match!');
+    else setErrorMessage('');
   }
 
   const handleLoginInstead = () => {
@@ -94,7 +94,10 @@ export default function Signup() {
           <input className={style.input}
             type="password" 
             placeholder="Password" 
-            onChange={handlePasswordChange} 
+            onChange={handlePasswordChange}
+            autoCapitalize='none'
+            spellCheck="false"
+            autoComplete='password'
             value={formData.password}
             required
           />
@@ -103,13 +106,12 @@ export default function Signup() {
             placeholder="Confirm password" 
             onChange={handleConfirmPasswordChange} 
             value={confirmPassword}
-            autoComplete="email"
             spellCheck="false"
             autoCapitalize='none'
             required
           />
-          {errorMessage && <h2 className={style.error}>*Passwords must match!*</h2>}
-          <button disabled={errorMessage} className={style['login-button']} type="submit" onClick={handleSignup}>Signup</button>
+          {errorMessage == '' ? '' : <p className={style.error}>{errorMessage}</p>}
+          <button disabled={errorMessage != ''} className={style['login-button']} type="submit" onClick={handleSignup}>Signup</button>
         </form>
       </div>
       <div className={style["alt-options"]}>
