@@ -1,8 +1,8 @@
 import { authConfig } from "./auth.config";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
-import { User, IUser } from "./models/UserSchema";
+import bcrypt from "bcryptjs";
+import { User } from './models/UserSchema';
 
 export const {
     handlers: { GET, POST },
@@ -21,7 +21,7 @@ export const {
                 if (!credentials) return null;
 
                 try {
-                    const user = await User.findOne({ email: credentials.email }).lean<IUser | null>();
+                    const user = await User.findOne({ email: credentials.email }).lean();
                     if (user) {
                         const isMatch = await bcrypt.compare(
                             credentials.password as string,

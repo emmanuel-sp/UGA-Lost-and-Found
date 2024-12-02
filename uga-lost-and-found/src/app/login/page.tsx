@@ -1,21 +1,48 @@
-"use client"
+'use client'
 
-import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { signIn, signOut } from "@/auth";
 import style from '../css/Login.module.css'
 
+
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { setLoggedIn } = useAuth();
   const router = useRouter();
 
-  const handleLogin = (event: FormEvent) => {
-    event.preventDefault();
-    setLoggedIn(true);
-    router.push('/items');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+    event.preventDefault(); // Prevent the default form submission behavior.
+
+    const form = event.target as HTMLFormElement; // Get the form element from the event.
+    const formData = new FormData(form); // Create a FormData object from the form.
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    // [HERE GOES THE AUTHENTICATION LOGIC]
+
+    router.push('/items')
+
   };
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      email: event.target.value,
+    }));
+  }
+  
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      password: event.target.value,
+    }));
+  }
 
   const cancelLogin = () => {
     router.push('/items');
@@ -25,35 +52,27 @@ export default function Login() {
     router.push('/signup');
   }
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setUsername(event.target.value);
-  }
-  
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setPassword(event.target.value);
-  }
-
   return (
     <div className={style.login}>
       <h2 className={style.name}>UGA Lost & Found</h2>
       <div className={style["greet-log"]}>
         <h2 className={style.greeting}>Welcome Back!</h2>
-        <form className={style.form}>
+        <form className={style.form} onSubmit={handleSubmit}>
           <input className={style.input}
             type="text" 
-            placeholder="Username" 
-            onChange={handleUsernameChange} 
-            value={username}
+            placeholder="Email" 
+            onChange={handleEmailChange} 
+            value={formData.email}
             required
           />
           <input className={style.input}
             type="password" 
             placeholder="Password" 
             onChange={handlePasswordChange} 
-            value={password}
+            value={formData.password}
             required
           />
-          <button className={style['login-button']} type="submit" onClick={handleLogin}>Login</button>
+          <button className={style['login-button']} type="submit">Login</button>
         </form>
       </div>
       <div className={style["alt-options"]}>

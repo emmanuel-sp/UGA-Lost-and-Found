@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { POST } from '@/app/api/users/route';
 import style from '../css/Login.module.css'
 
 export default function Signup() {
@@ -27,7 +26,7 @@ export default function Signup() {
 
     try {
       console.log(JSON.stringify(formData));
-      const response = await fetch('/api/users', {
+      const response = await fetch('/api/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +35,6 @@ export default function Signup() {
       });
 
       if (!response.ok) {
-        const data = await response.json();
         setErrorMessage(true);
         return;
       }
