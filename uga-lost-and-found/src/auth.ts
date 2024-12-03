@@ -5,6 +5,7 @@ import { User } from './models/UserSchema';
 import connectMongoDB from '@/libs/mongodb';
 import { authConfig } from './auth.config';
 
+
 export const {
   handlers: { GET, POST },
   auth,

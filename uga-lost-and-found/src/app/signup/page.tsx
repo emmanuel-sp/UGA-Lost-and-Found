@@ -45,7 +45,7 @@ export default function Signup() {
             setErrorMessage('User not found!')
             return;
           }
-          window.location.reload()
+          //window.location.reload()
           router.push('/items'); // Redirect on successful login
       };
 

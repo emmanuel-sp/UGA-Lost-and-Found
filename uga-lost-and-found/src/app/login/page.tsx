@@ -7,21 +7,11 @@ import { doCredentialLogin } from '../actions';
 
 export default function Login() {
   const router = useRouter();
-  //const [csrfToken, setCsrfToken] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
-  // Fetch CSRF token on component mount
-  // useEffect(() => {
-  //   const fetchCsrfToken = async () => {
-  //     const response = await fetch('/api/auth/csrf');
-  //     const data = await response.json();
-  //     setCsrfToken(data.csrfToken);
-  //   };
-  //   fetchCsrfToken();
-  // }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -30,6 +20,8 @@ export default function Login() {
       [name]: value,
     }));
   };
+
+
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -42,7 +34,7 @@ export default function Login() {
         alert('Login failed. Please check your credentials.');
         return;
       }
-      window.location.reload()
+      //window.location.reload()
       router.push('/items'); // Redirect on successful login
       
     } catch (error) {

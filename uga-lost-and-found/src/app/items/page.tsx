@@ -8,13 +8,13 @@ import ItemCard from "../components/ItemCard";
 import style from "../css/Items.module.css";
 import itemstyle from "../css/ItemCard.module.css";
 import { doLogout } from "../actions";
+import { getSession } from 'next-auth/react';
 
 export default function Items() {
 //const Items: React.FC = async () => {
   
   const router = useRouter();
   const [items, setItems] = useState([]);
-
   const { data: session, status } = useSession();
 
   useEffect(() => {
@@ -29,6 +29,8 @@ export default function Items() {
       } catch (error) {
         console.log("Error from Item List:", error);
       }
+      await getSession();
+    
     };
     fetchItems();
   }, []);
@@ -60,7 +62,7 @@ export default function Items() {
             
             await doLogout()
             
-            window.location.reload();
+            //window.location.reload();
             
             router.push('/')
             }}className={style.navButton}>
