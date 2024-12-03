@@ -7,6 +7,7 @@ import Search from "../components/Search";
 import ItemCard from "../components/ItemCard";
 import style from "../css/Items.module.css";
 import itemstyle from "../css/ItemCard.module.css";
+import { doLogout } from "../actions";
 
 export default function Items() {
 //const Items: React.FC = async () => {
@@ -48,14 +49,21 @@ export default function Items() {
   //onClick={() => setLoggedIn(false)}
   return (
     <>
-      {session ? (
+      {session?.user ? (
         <nav className={style.AuthNavBar}>
           <h2 className={style.name}>UGA Lost & Found</h2>
           <Search />
           <button onClick={() => router.push("/form")} className={style.navButton}>
             Add Item
           </button>
-          <button  className={style.navButton}>
+          <button onClick={async ()=> {
+            
+            await doLogout()
+            
+            window.location.reload();
+            
+            router.push('/')
+            }}className={style.navButton}>
             Logout
           </button>
           

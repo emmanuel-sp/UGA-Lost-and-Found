@@ -3,11 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import style from '../css/Login.module.css'
+import { doCredentialLogin } from '../actions';
 
 export default function Signup() {
   
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -20,12 +21,11 @@ export default function Signup() {
 
     // Validate inputs
     if (!formData.email || !formData.password) {
-      setErrorMessage(true);
+      setErrorMessage('Email and password are required!');
       return;
     }
 
     try {
-      console.log(JSON.stringify(formData));
       const response = await fetch('/api/users/signup', {
         method: 'POST',
         headers: {
@@ -34,13 +34,23 @@ export default function Signup() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        setErrorMessage(true);
+      if (!response) {
+        setErrorMessage('Failed to sign up');
         return;
-      }
+      } else {
+          "use server"
+          const response = await doCredentialLogin(formData);
+          "use client"
+          if (!response) {
+            setErrorMessage('User not found!')
+            return;
+          }
+          window.location.reload()
+          router.push('/items'); // Redirect on successful login
+      };
 
     } catch (error) {
-      setErrorMessage(true);
+      setErrorMessage("Unexpected error has occurred!")
     }
 
     router.push('/items');
@@ -58,14 +68,14 @@ export default function Signup() {
       ...prev,
       password: event.target.value,
     }));
-    if (confirmPassword != event.target.value) setErrorMessage(true);
-    else setErrorMessage(false);
+    if (confirmPassword != event.target.value) setErrorMessage('Passwords must math!');
+    else setErrorMessage('');
   }
 
   const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setConfirmPassword(event.target.value);
-    if (formData.password != event.target.value) setErrorMessage(true);
-    else setErrorMessage(false);
+    if (formData.password != event.target.value) setErrorMessage('Passwords must math!');
+    else setErrorMessage('');
   }
 
   const handleLoginInstead = () => {
@@ -94,6 +104,9 @@ export default function Signup() {
             placeholder="Password" 
             onChange={handlePasswordChange} 
             value={formData.password}
+            autoComplete="password"
+            spellCheck="false"
+            autoCapitalize='none'
             required
           />
           <input className={style.input}
@@ -101,13 +114,12 @@ export default function Signup() {
             placeholder="Confirm password" 
             onChange={handleConfirmPasswordChange} 
             value={confirmPassword}
-            autoComplete="email"
             spellCheck="false"
             autoCapitalize='none'
             required
           />
-          {errorMessage && <h2 className={style.error}>*Passwords must match!*</h2>}
-          <button disabled={errorMessage} className={style['login-button']} type="submit" onClick={handleSignup}>Signup</button>
+          {errorMessage != '' && <h2 className={style.error}>*Passwords must match!*</h2>}
+          <button disabled={errorMessage != ''} className={style['login-button']} type="submit" onClick={handleSignup}>Signup</button>
         </form>
       </div>
       <div className={style["alt-options"]}>

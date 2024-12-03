@@ -3,24 +3,25 @@
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import style from '../css/Login.module.css';
+import { doCredentialLogin } from '../actions';
 
 export default function Login() {
   const router = useRouter();
-  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  //const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
   // Fetch CSRF token on component mount
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      const response = await fetch('/api/auth/csrf');
-      const data = await response.json();
-      setCsrfToken(data.csrfToken);
-    };
-    fetchCsrfToken();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCsrfToken = async () => {
+  //     const response = await fetch('/api/auth/csrf');
+  //     const data = await response.json();
+  //     setCsrfToken(data.csrfToken);
+  //   };
+  //   fetchCsrfToken();
+  // }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -34,25 +35,16 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const response = await fetch('/api/auth/callback/credentials', {
-        method: 'POST',
-        body: JSON.stringify({
-          csrfToken,
-          email: formData.email,
-          password: formData.password,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert(errorData.message || 'Login failed. Please check your credentials.');
+      "use server"
+      const response = await doCredentialLogin(formData);
+      "use client"
+      if (!response) {
+        alert('Login failed. Please check your credentials.');
         return;
       }
-
+      window.location.reload()
       router.push('/items'); // Redirect on successful login
+      
     } catch (error) {
       console.error('Login error:', error);
       alert('An unexpected error occurred. Please try again.');

@@ -85,7 +85,7 @@ export default function EditForm() {
   
   return (
     <div className={style.entireForm}>
-      <h1 className="text-4xl font-bold mb-6 text-center">Add Item Form</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Edit Item Form</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name" className={style.label}>Item Name</label>
         <input className={style.input}

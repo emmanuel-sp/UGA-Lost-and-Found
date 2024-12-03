@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { authConfig } from "./auth.config";
 import NextAuth from "next-auth";
-import next from "next";
 
 const { auth } = NextAuth(authConfig);
 
@@ -20,7 +19,7 @@ export async function middleware(request: any) {
 
 export const config = {
     matcher: [
-        "/api",
-        "/api/:path*"
+        "/form/",
+        "/edit-items/:path*"
     ]
 };

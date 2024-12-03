@@ -1,5 +1,7 @@
+"use client"
+
 import Image from "next/image";
-import { useAuth } from "../context/AuthContext";
+import { useSession } from "next-auth/react";
 import styles from "../css/ItemCard.module.css";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +24,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
   onDelete,
   onEdit,
 }) => {
-  const { loggedIn } = useAuth();
+  const { data: session } = useSession();
   const router = useRouter();
 
   return (
@@ -34,7 +36,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
       >
         {status}
       </div>
-      {loggedIn && (
+      {session?.user && (
         <div className={styles.buttonContainer}>
           <button
             onClick={onEdit}

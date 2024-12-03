@@ -1,15 +1,21 @@
 'use server'
 
 import { signIn, signOut } from "@/auth";
+import { redirect } from "next/dist/server/api-utils";
 
 export async function doLogout() {
-    await signOut({ redirectTo: "/" });
+    await signOut({redirect:false});
+}
+type FormData = {
+    email: string,
+    password: string,
 }
 
 export async function doCredentialLogin(formData: FormData): Promise<any> {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
+    
+    const email = formData["email"] as string;
+    const password = formData["password"] as string;
+    
     try {
         const response = await signIn("credentials", {
             email,
@@ -18,7 +24,7 @@ export async function doCredentialLogin(formData: FormData): Promise<any> {
         })
         return response;
     } catch (err: any) {
-        console.log(err);
+        console.log("Failure 2")
     }
 
 }
