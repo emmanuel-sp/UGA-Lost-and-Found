@@ -1,19 +1,20 @@
 "use client";
 
-import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Search from "../components/Search";
 import ItemCard from "../components/ItemCard";
 import style from "../css/Items.module.css";
 import itemstyle from "../css/ItemCard.module.css";
-import { useEffect, useState } from "react";
 
 export default function Items() {
-  const { loggedIn } = useAuth();
-  const { setLoggedIn } = useAuth();
+//const Items: React.FC = async () => {
+  
   const router = useRouter();
-
   const [items, setItems] = useState([]);
+
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -44,19 +45,20 @@ export default function Items() {
       console.log("Error in ShowItemDetails_deleteClick:", error);
     }
   };
-
+  //onClick={() => setLoggedIn(false)}
   return (
     <>
-      {loggedIn ? (
+      {session ? (
         <nav className={style.AuthNavBar}>
           <h2 className={style.name}>UGA Lost & Found</h2>
           <Search />
           <button onClick={() => router.push("/form")} className={style.navButton}>
             Add Item
           </button>
-          <button onClick={() => setLoggedIn(false)} className={style.navButton}>
+          <button  className={style.navButton}>
             Logout
           </button>
+          
         </nav>
       ) : (
         <nav className={style.UnauthNavBar}>
@@ -90,3 +92,5 @@ export default function Items() {
     </>
   );
 }
+
+//export default Items;
