@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { signIn, signOut } from "@/auth";
+import { doCredentialLogin } from '../actions/index';
 import style from '../css/Login.module.css'
 
 
@@ -14,20 +14,17 @@ export default function Login() {
     password: '',
   });
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: React.FormEvent) => {
+    console.log("handling login")
+    event.preventDefault();
 
-    event.preventDefault(); // Prevent the default form submission behavior.
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
 
-    const form = event.target as HTMLFormElement; // Get the form element from the event.
-    const formData = new FormData(form); // Create a FormData object from the form.
+    await doCredentialLogin(formData);
+    console.log("calling doCredentialLogin")
 
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    // [HERE GOES THE AUTHENTICATION LOGIC]
-
-    router.push('/items')
-
+    router.push('/items');
   };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -57,7 +54,7 @@ export default function Login() {
       <h2 className={style.name}>UGA Lost & Found</h2>
       <div className={style["greet-log"]}>
         <h2 className={style.greeting}>Welcome Back!</h2>
-        <form className={style.form} onSubmit={handleSubmit}>
+        <form className={style.form} onSubmit={handleLogin}>
           <input className={style.input}
             type="text" 
             placeholder="Email" 
