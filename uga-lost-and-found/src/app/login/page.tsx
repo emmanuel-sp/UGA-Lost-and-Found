@@ -1,83 +1,106 @@
-'use client'
+'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { doCredentialLogin } from '../actions/index';
-import style from '../css/Login.module.css'
-
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
+import style from '../css/Login.module.css';
 
 export default function Login() {
   const router = useRouter();
-
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const handleLogin = async (event: React.FormEvent) => {
-    console.log("handling login")
+  // Fetch CSRF token on component mount
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      const response = await fetch('/api/auth/csrf');
+      const data = await response.json();
+      setCsrfToken(data.csrfToken);
+    };
+    fetchCsrfToken();
+  }, []);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
+    try {
+      const response = await fetch('/api/auth/callback/credentials', {
+        method: 'POST',
+        body: JSON.stringify({
+          csrfToken,
+          email: formData.email,
+          password: formData.password,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    await doCredentialLogin(formData);
-    console.log("calling doCredentialLogin")
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.message || 'Login failed. Please check your credentials.');
+        return;
+      }
 
-    router.push('/items');
+      router.push('/items'); // Redirect on successful login
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
   };
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      email: event.target.value,
-    }));
-  }
-  
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      password: event.target.value,
-    }));
-  }
+  const cancelLogin = () => router.push('/items');
 
-  const cancelLogin = () => {
-    router.push('/items');
-  };
-
-  const handleSignupInstead = () => {
-    router.push('/signup');
-  }
+  const handleSignupInstead = () => router.push('/signup');
 
   return (
     <div className={style.login}>
       <h2 className={style.name}>UGA Lost & Found</h2>
-      <div className={style["greet-log"]}>
+      <div className={style['greet-log']}>
         <h2 className={style.greeting}>Welcome Back!</h2>
         <form className={style.form} onSubmit={handleLogin}>
-          <input className={style.input}
-            type="text" 
-            placeholder="Email" 
-            onChange={handleEmailChange} 
+          <input
+            className={style.input}
+            type="text"
+            name="email"
+            placeholder="Email"
             value={formData.email}
+            onChange={handleChange}
             required
           />
-          <input className={style.input}
-            type="password" 
-            placeholder="Password" 
-            onChange={handlePasswordChange} 
+          <input
+            className={style.input}
+            type="password"
+            name="password"
+            placeholder="Password"
             value={formData.password}
+            onChange={handleChange}
             required
           />
-          <button className={style['login-button']} type="submit">Login</button>
+          <button className={style['login-button']} type="submit">
+            Login
+          </button>
         </form>
       </div>
-      <div className={style["alt-options"]}>
-        <button onClick={handleSignupInstead} className={style.signup}>Don't have an account? Sign Up!</button>
+      <div className={style['alt-options']}>
+        <button onClick={handleSignupInstead} className={style.signup}>
+          Don't have an account? Sign Up!
+        </button>
         <span className={style.separator}> | </span>
-        <button className={style.cancel} onClick={cancelLogin}>Continue without logging in</button>
+        <button className={style.cancel} onClick={cancelLogin}>
+          Continue without logging in
+        </button>
       </div>
     </div>
   );
-  
-};
+}

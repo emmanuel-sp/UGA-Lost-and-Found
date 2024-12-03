@@ -1,57 +1,61 @@
-import { authConfig } from "./auth.config";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
 import { User } from './models/UserSchema';
-import connectMongoDB from "@/libs/mongodb";
-
+import connectMongoDB from '@/libs/mongodb';
 
 export const {
-    handlers: { GET, POST },
-    auth,
-    signIn,
-    signOut,
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
 } = NextAuth({
-    ...authConfig,
-    providers: [
-        CredentialsProvider({
-            credentials: {
-                email: {},
-                password: {},
-            },
-            async authorize(credentials) {
-                if (!credentials) return null;
+  providers: [
+    CredentialsProvider({
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'example@example.com' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          console.error('Missing credentials:', credentials);
+          return null;
+        }
 
-                try {
-                    
-                    await connectMongoDB();
+        try {
+          console.log('Connecting to MongoDB...');
+          await connectMongoDB();
+          console.log('Connected to MongoDB.');
 
-                    const user = await User.findOne({ email: credentials.email }).lean();
-                    if (user) {
-                        const isMatch = await bcrypt.compare(
-                            credentials.password as string,
-                            user.password
-                        );
+          const normalizedEmail = credentials.email.toLowerCase();
+          console.log(`Finding user with email: ${normalizedEmail}`);
 
-                        if (isMatch) {
-                            return {
-                                id: user._id.toString(),
-                                email: user.email,
-                                //name: user.username,
-                            };
-                        } else {
-                            console.log("Email or Password is not correct");
-                            return null;
-                        }
-                    } else {
-                        console.log("User not found");
-                        return null;
-                    }
-                } catch (error: any) {
-                    console.log("An error occured: ",error);
-                    return null;
-                }
-            },
-        }),
-    ],
+          const user = await User.findOne({ email: normalizedEmail }).lean();
+          console.log('User query result:', user);
+
+          if (!user) {
+            console.error('User not found');
+            return null;
+          }
+
+          console.log('Comparing passwords...');
+          const isMatch = await bcrypt.compare(credentials.password, user.password);
+
+          if (!isMatch) {
+            console.error('Password mismatch');
+            return null;
+          }
+
+          console.log('Authentication successful');
+          return { id: user._id.toString(), email: user.email };
+        } catch (error) {
+          console.error('Authentication error:', error);
+          return null;
+        }
+      },
+    }),
+  ],
+  pages: {
+    signIn: '/login',
+  },
 });
